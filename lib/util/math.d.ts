@@ -7,7 +7,11 @@
  * @param {number} num
  * @returns {[number, number][]}
  */
-export declare function getPolygonPoints(center: [number, number], radius: number, num: number): [number, number][];
+export declare function getPolygonPoints(
+  center: [number, number],
+  radius: number,
+  num: number
+): [number, number][];
 /**
  * 将直线连接的points转成稍微有弧度的path
  *
@@ -16,4 +20,7 @@ export declare function getPolygonPoints(center: [number, number], radius: numbe
  * @param {number} d
  * @returns {string}
  */
-export declare function roundedPoints(points: [number, number][], d: number): string;
+export declare function roundedPoints(
+  points: [number, number][],
+  d: number
+): string;

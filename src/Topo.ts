@@ -1,11 +1,11 @@
+import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
 import { select, Selection } from "d3-selection";
 import { zoom, zoomTransform, zoomIdentity, ZoomBehavior } from "d3-zoom";
 // import NodeRenderObject from './NodeRenderObject';
 // import LinkRenderObject from './LinkRenderObject'
 // import { hierarchyModel, force, IHierarchyParams, IForceParams } from "./model";
 // import { fromLinks, allocateDepth, locateCoordinate } from './util'
-import { INode } from "./Node";
-import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
+import { INode } from "./core/Node";
 
 export interface ITopo {
   dom: HTMLElement | null;

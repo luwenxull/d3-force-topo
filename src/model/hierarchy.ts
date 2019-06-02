@@ -1,4 +1,4 @@
-import { INode } from "../Node";
+import { INode } from "../core/Node/Node";
 
 export interface IHierarchyParams {
   tops: INode[];

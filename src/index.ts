@@ -1,3 +1,3 @@
 export * from "./Topo";
-export * from "./Node";
+export * from "./core";
 export * from "./model";
