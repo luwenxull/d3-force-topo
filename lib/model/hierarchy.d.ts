@@ -1,14 +1,19 @@
 import { INode } from "../core/Node/Node";
+export interface IConnects {
+  [prop: string]: INode[];
+}
 export interface IHierarchyParams {
   tops: INode[];
   gap: [number, number];
+  connects: IConnects;
 }
 /**
  * 分配depth
  *
  * @export
  * @param {{ depth: number; nodes: INode[] }[]} results
- * @param {INode[]} levelNodes
+ * @param {IConnects} connects
+ * @param {INode[]} nodesOfCurrentDepth
  * @param {number} depth
  * @returns
  */
@@ -17,7 +22,8 @@ export declare function allocateDepth(
     depth: number;
     nodes: INode[];
   }[],
-  levelNodes: INode[],
+  connects: IConnects,
+  nodesOfCurrentDepth: INode[],
   depth: number
 ): {
   depth: number;
@@ -28,6 +34,7 @@ export declare function allocateDepth(
  *
  * @export
  * @param {{ depth: number; nodes: INode[] }[]} results
+ * @param {IConnects} connects
  * @param {[number, number]} gap
  * @returns
  */
@@ -36,6 +43,7 @@ export declare function locateCoordinate(
     depth: number;
     nodes: INode[];
   }[],
+  connects: IConnects,
   gap: [number, number]
 ): number;
 /**

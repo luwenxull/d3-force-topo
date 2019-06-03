@@ -1,8 +1,13 @@
 import { INode } from "../core/Node/Node";
 
+export interface IConnects {
+  [prop: string]: INode[];
+}
+
 export interface IHierarchyParams {
   tops: INode[];
   gap: [number, number];
+  connects: IConnects;
 }
 
 /**
@@ -10,42 +15,47 @@ export interface IHierarchyParams {
  *
  * @export
  * @param {{ depth: number; nodes: INode[] }[]} results
- * @param {INode[]} levelNodes
+ * @param {IConnects} connects
+ * @param {INode[]} nodesOfCurrentDepth
  * @param {number} depth
  * @returns
  */
 export function allocateDepth(
   results: { depth: number; nodes: INode[] }[],
-  levelNodes: INode[],
+  connects: IConnects,
+  nodesOfCurrentDepth: INode[],
   depth: number
 ) {
   const deeperNodes: INode[] = [];
-  levelNodes.forEach(node => {
+  nodesOfCurrentDepth.forEach(node => {
     node.depth = depth;
-    node.connects.forEach(node => {
-      /**
-       * 一个节点的深度取最小的一个
-       */
-      if (
-        typeof node.depth !== "number" /* 防止深层次节点覆盖低层次节点的depth */
-      ) {
+    if (connects[node.id]) {
+      connects[node.id].forEach(node => {
         /**
-         * !立即写depth
-         * 基于节点a，depth=0,检索到[b,c], depth=1
-         * 然后基于b，depth=1,检索到[c]
-         * 如果c此时没有写入过depth，会被错误的写入depth=2
+         * 一个节点的深度取最小的一个
          */
-        node.depth = depth + 1;
-        deeperNodes.push(node);
-      }
-    });
+        if (
+          typeof node.depth !==
+          "number" /* 防止深层次节点覆盖低层次节点的depth */
+        ) {
+          /**
+           * !立即写depth
+           * 基于节点a，depth=0,检索到[b,c], depth=1
+           * 然后基于b，depth=1,检索到[c]
+           * 如果c此时没有写入过depth，会被错误的写入depth=2
+           */
+          node.depth = depth + 1;
+          deeperNodes.push(node);
+        }
+      });
+    }
   });
   results.push({
     depth,
-    nodes: levelNodes
+    nodes: nodesOfCurrentDepth
   });
   if (deeperNodes.length) {
-    allocateDepth(results, deeperNodes, depth + 1);
+    allocateDepth(results, connects, deeperNodes, depth + 1);
   }
   return results;
 }
@@ -55,11 +65,13 @@ export function allocateDepth(
  *
  * @export
  * @param {{ depth: number; nodes: INode[] }[]} results
+ * @param {IConnects} connects
  * @param {[number, number]} gap
  * @returns
  */
 export function locateCoordinate(
   results: { depth: number; nodes: INode[] }[],
+  connects: IConnects,
   gap: [number, number]
 ) {
   const [w, h] = gap;
@@ -71,7 +83,7 @@ export function locateCoordinate(
       (xs, node) => {
         // 首先收集父节点x坐标
         const parentsNeedSkip = new Set();
-        const parentsX: number[] = Array.from(node.connects).reduce(
+        const parentsX: number[] = Array.from(connects[node.id] || []).reduce(
           (acc, { id, depth, position }) => {
             if (
               !parentsNeedSkip.has(id) &&
@@ -125,6 +137,10 @@ export function locateCoordinate(
  */
 export function hierarchyModel(params: IHierarchyParams): () => number {
   return () => {
-    return locateCoordinate(allocateDepth([], params.tops, 0), params.gap);
+    return locateCoordinate(
+      allocateDepth([], params.connects, params.tops, 0),
+      params.connects,
+      params.gap
+    );
   };
 }

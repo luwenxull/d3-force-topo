@@ -15,6 +15,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "pretty": "prettier --write 'src/**/*.[tj]s' 'lib/**/*.[tj]s'"
+    "pretty": "prettier --write src/**/*.[tj]s lib/**/*.[tj]s"
   }
 }

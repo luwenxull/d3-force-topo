@@ -8,9 +8,9 @@ import { INode, Node, ITopoNodeOption } from "./Node";
 
 export class ScalableNode extends Node implements INode {
   private backRenderObject: IRenderObject;
-  constructor(public id: string, option: ITopoNodeOption) {
+  constructor(option: ITopoNodeOption) {
     // this.connects = []
-    super(id, option);
+    super(option);
     const { img, size } = option;
     this.backRenderObject = new RenderObject("path", {
       attr: {
@@ -20,7 +20,6 @@ export class ScalableNode extends Node implements INode {
       },
       visible: false
     });
-    debugger;
     this.renderObject.add(this.backRenderObject);
   }
 

@@ -1,4 +1,4 @@
-import { INode } from "./core/Node";
+import { ILink, INode } from "./core";
 export interface ITopo {
   dom: HTMLElement | null;
   nodes: INode[];
@@ -6,6 +6,7 @@ export interface ITopo {
 }
 export declare class Topo implements ITopo {
   nodes: INode[];
+  links: ILink[];
   dom: HTMLElement | null;
   private _model?;
   private _svg?;
@@ -13,7 +14,7 @@ export declare class Topo implements ITopo {
   private nodeGroupRenderObject;
   private linkGroupRenderObject;
   private zoomBehavior?;
-  constructor(nodes: INode[]);
+  constructor(nodes: INode[], links: ILink[]);
   model(fn: () => number): ITopo;
   /**
    * 绘制拓扑入口函数

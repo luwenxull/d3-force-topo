@@ -1,11 +1,7 @@
 import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
 import { select, Selection } from "d3-selection";
 import { zoom, zoomTransform, zoomIdentity, ZoomBehavior } from "d3-zoom";
-// import NodeRenderObject from './NodeRenderObject';
-// import LinkRenderObject from './LinkRenderObject'
-// import { hierarchyModel, force, IHierarchyParams, IForceParams } from "./model";
-// import { fromLinks, allocateDepth, locateCoordinate } from './util'
-import { INode } from "./core/Node";
+import { ILink, INode } from "./core";
 
 export interface ITopo {
   dom: HTMLElement | null;
@@ -21,7 +17,7 @@ export class Topo implements ITopo {
   private nodeGroupRenderObject: IRenderObject;
   private linkGroupRenderObject: IRenderObject;
   private zoomBehavior?: ZoomBehavior<SVGSVGElement, any>;
-  constructor(public nodes: INode[]) {
+  constructor(public nodes: INode[], public links: ILink[]) {
     this.dom = null;
     this.rootGroupRenderObject = new RenderObject("g", {
       attr: {
@@ -69,8 +65,12 @@ export class Topo implements ITopo {
       // 基于模型计算位置
       const center = this._model();
       this.nodes.forEach(node => {
-        node.renderObject.position = node.position;
+        node.sync();
         this.nodeGroupRenderObject.add(node.renderObject);
+      });
+      this.links.forEach(link => {
+        link.sync();
+        this.linkGroupRenderObject.add(link.renderObject);
       });
       this.rootGroupRenderObject.renderTo(this._svg.node() as SVGElement);
       this.enableZoom();
