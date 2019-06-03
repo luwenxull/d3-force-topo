@@ -1,4 +1,4 @@
-import { INode } from "../core/Node/Node";
+import { INode } from '../core/Node/Node';
 export interface IConnects {
   [prop: string]: INode[];
 }

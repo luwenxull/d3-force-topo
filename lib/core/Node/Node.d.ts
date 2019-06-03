@@ -1,4 +1,4 @@
-import { IRenderObject } from "@luwenxull/svg-render-object";
+import { IRenderObject } from '@luwenxull/svg-render-object';
 export interface INode {
   id: string | number;
   renderObject: IRenderObject;

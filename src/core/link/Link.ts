@@ -1,5 +1,5 @@
-import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
-import { INode } from "../node";
+import { IRenderObject, RenderObject } from '@luwenxull/svg-render-object';
+import { INode } from '../node';
 
 export interface ILink {
   id: string | number;
@@ -25,18 +25,15 @@ export class Link implements ILink {
   public to: INode;
   protected pathRenderObject: IRenderObject;
   constructor(option: ITopoLinkOption) {
-    const { id, from, to, color = "#000", width = 1 } = option;
+    const { id, from, to, color = '#000', width = 1 } = option;
     this.id = id;
     this.from = from;
     this.to = to;
-    this.renderObject = new RenderObject("g");
-    this.pathRenderObject = new RenderObject("path", {
+    this.renderObject = new RenderObject('g');
+    this.pathRenderObject = new RenderObject('path', {
       attr: {
-        d: `M${from.position.x},${from.position.y} L${to.position.x},${
-          to.position.y
-        }`,
         stroke: color,
-        "stroke-width": width
+        'stroke-width': width
       }
     });
     this.renderObject.add(this.pathRenderObject);

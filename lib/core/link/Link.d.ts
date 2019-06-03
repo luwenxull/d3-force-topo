@@ -1,5 +1,5 @@
-import { IRenderObject } from "@luwenxull/svg-render-object";
-import { INode } from "../node";
+import { IRenderObject } from '@luwenxull/svg-render-object';
+import { INode } from '../node';
 export interface ILink {
   id: string | number;
   renderObject: IRenderObject;

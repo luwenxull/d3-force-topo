@@ -72,5 +72,5 @@ export function roundedPoints(points: [number, number][], d: number): string {
       acc += `Q ${cp.toString()} ${ep.toString()}`;
     }
     return acc;
-  }, "");
+  }, '');
 }

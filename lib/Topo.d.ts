@@ -1,4 +1,4 @@
-import { ILink, INode } from "./core";
+import { ILink, INode } from './core';
 export interface ITopo {
   dom: HTMLElement | null;
   nodes: INode[];

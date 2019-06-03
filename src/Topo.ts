@@ -1,7 +1,7 @@
-import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
-import { select, Selection } from "d3-selection";
-import { zoom, zoomTransform, zoomIdentity, ZoomBehavior } from "d3-zoom";
-import { ILink, INode } from "./core";
+import { IRenderObject, RenderObject } from '@luwenxull/svg-render-object';
+import { select, Selection } from 'd3-selection';
+import { zoom, zoomTransform, zoomIdentity, ZoomBehavior } from 'd3-zoom';
+import { ILink, INode } from './core';
 
 export interface ITopo {
   dom: HTMLElement | null;
@@ -19,19 +19,19 @@ export class Topo implements ITopo {
   private zoomBehavior?: ZoomBehavior<SVGSVGElement, any>;
   constructor(public nodes: INode[], public links: ILink[]) {
     this.dom = null;
-    this.rootGroupRenderObject = new RenderObject("g", {
+    this.rootGroupRenderObject = new RenderObject('g', {
       attr: {
-        "data-name": "root-group"
+        'data-name': 'root-group'
       }
     });
-    this.nodeGroupRenderObject = new RenderObject("g", {
+    this.nodeGroupRenderObject = new RenderObject('g', {
       attr: {
-        "data-name": "node-group"
+        'data-name': 'node-group'
       }
     });
-    this.linkGroupRenderObject = new RenderObject("g", {
+    this.linkGroupRenderObject = new RenderObject('g', {
       attr: {
-        "data-name": "link-group"
+        'data-name': 'link-group'
       }
     });
     this.rootGroupRenderObject
@@ -57,11 +57,11 @@ export class Topo implements ITopo {
   render(dom: HTMLElement) {
     if (this._model) {
       this.dom = dom;
-      dom.textContent = ""; // 清空已有内容
+      dom.textContent = ''; // 清空已有内容
       this._svg = select(dom)
-        .append("svg")
-        .attr("width", "100%")
-        .attr("height", "100%");
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', '100%');
       // 基于模型计算位置
       const center = this._model();
       this.nodes.forEach(node => {
@@ -76,7 +76,7 @@ export class Topo implements ITopo {
       this.enableZoom();
       this.center(center);
     } else {
-      throw new Error("Need a model! model can be force or hierarchy.");
+      throw new Error('Need a model! model can be force or hierarchy.');
     }
   }
 
@@ -90,7 +90,7 @@ export class Topo implements ITopo {
       let zoomBehavior = zoom<SVGSVGElement, any>().scaleExtent([0.4, 4]);
       // .filter(() => event.type === 'wheel')
       this._svg.call(
-        zoomBehavior.on("zoom", () => {
+        zoomBehavior.on('zoom', () => {
           if (this._svg) {
             const transform = zoomTransform(this._svg.node() as SVGElement);
             this.rootGroupRenderObject.attr.transform = transform.toString();

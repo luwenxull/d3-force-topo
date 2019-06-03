@@ -1,4 +1,4 @@
-import { INode } from "../core/Node/Node";
+import { INode } from '../core/Node/Node';
 
 export interface IConnects {
   [prop: string]: INode[];
@@ -36,7 +36,7 @@ export function allocateDepth(
          */
         if (
           typeof node.depth !==
-          "number" /* 防止深层次节点覆盖低层次节点的depth */
+          'number' /* 防止深层次节点覆盖低层次节点的depth */
         ) {
           /**
            * !立即写depth

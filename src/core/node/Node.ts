@@ -1,4 +1,4 @@
-import { IRenderObject, RenderObject } from "@luwenxull/svg-render-object";
+import { IRenderObject, RenderObject } from '@luwenxull/svg-render-object';
 
 export interface INode {
   id: string | number;
@@ -24,8 +24,8 @@ export class Node implements INode {
   constructor(option: ITopoNodeOption) {
     const { id, img, size } = option;
     this.id = id;
-    this.renderObject = new RenderObject("g");
-    this.imageRenderObject = new RenderObject("image", {
+    this.renderObject = new RenderObject('g');
+    this.imageRenderObject = new RenderObject('image', {
       attr: {
         href: img,
         width: size,
